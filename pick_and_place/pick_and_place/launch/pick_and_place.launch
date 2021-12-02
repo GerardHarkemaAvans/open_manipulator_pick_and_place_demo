@@ -1,12 +1,23 @@
 <launch>
 
   <arg name="video_device"    default="/dev/video4"/>
+  <arg name="use_state_publisher" default="true"/>
 
-  <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
+  <group if="$(arg use_state_publisher)">
+    <param name="robot_description"
+          command="$(find xacro)/xacro --inorder '$(find pick_and_place)/urdf/open_manipulator_robot.urdf.xacro'"/>
+
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
+      <rosparam param="source_list" subst_value="true">["joint_states"]</rosparam>
+    </node>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  </group>
+
+  <include file="$(find perceptions_ar_markers)/launch/ar_pose.launch">
     <arg name="user_marker_size" value="3.0" />
     <arg name="camera_model" value="adrucam" />
     <arg name="open_rviz" value="false" />
-    <arg name="use_state_publisher" value="false" />
     <arg name="video_device"  value="$(arg video_device)" />
   </include>
 
@@ -15,7 +26,7 @@
   <arg name="robot_description" default="robot_description"/>
 
   <!-- The semantic description that corresponds to the URDF -->
-  <param name="$(arg robot_description)_semantic" textfile="$(find open_manipulator_moveit_config)/config/open_manipulator.srdf" />
+  <param name="$(arg robot_description)_semantic" textfile="$(find pick_and_place_moveit_config)/config/open_manipulator.srdf" />
 
   <node pkg="tf2_ros" type="static_transform_publisher" name="test_broadcaster" args="0.2 0.05 0.10 0 0 0 1 link1 testpoint" />
 

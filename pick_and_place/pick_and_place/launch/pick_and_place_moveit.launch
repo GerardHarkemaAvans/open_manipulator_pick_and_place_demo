@@ -3,16 +3,29 @@
   <arg name="baud_rate"    default="1000000"/>
   <arg name="video_device"    default="/dev/video4"/>
 
-  <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
+  <arg name="use_state_publisher" default="false"/>
+
+  <group if="$(arg use_state_publisher)">
+    <param name="robot_description"
+          command="$(find xacro)/xacro --inorder '$(find pick_and_place)/urdf/open_manipulator_robot.urdf.xacro'"/>
+
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
+      <rosparam param="source_list" subst_value="true">["joint_states"]</rosparam>
+    </node>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  </group>
+
+
+  <include file="$(find perceptions_ar_markers)/launch/ar_pose.launch">
     <arg name="user_marker_size" value="3.0" />
     <arg name="camera_model" value="adrucam" />
     <arg name="open_rviz" value="false" />
-    <arg name="use_state_publisher" value="false" />
     <arg name="video_device"  value="$(arg video_device)" />
   </include>
 
   <!-- start the environment -->
-  <include file="$(find open_manipulator_controllers)/launch/joint_trajectory_controller.launch">
+  <include file="$(find pick_and_place)/launch/joint_trajectory_controller.launch">
     <arg name="sim" value="false"/>
     <arg name="open_rviz" value="false"/>
     <arg name="usb_port"     default="$(arg usb_port)"/>
