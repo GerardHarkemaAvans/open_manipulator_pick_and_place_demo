@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="ar_marker_test">
+
+	<executable package_path="pick_and_place_flexbe_behaviors.ar_marker_test_sm" class="ar_marker_testSM" />
+	<tagstring></tagstring>
+	<author>Gerard Harkema</author>
+	<date>Fri Nov 12 2021</date>
+	<description>
+		Tests the functionality of reading ar_mark list
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+
+</behavior>

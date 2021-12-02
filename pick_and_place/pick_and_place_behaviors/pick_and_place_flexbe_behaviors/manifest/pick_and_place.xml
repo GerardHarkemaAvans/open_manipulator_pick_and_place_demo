@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="pick_and_place">
+
+	<executable package_path="pick_and_place_flexbe_behaviors.pick_and_place_sm" class="pick_and_placeSM" />
+	<tagstring></tagstring>
+	<author>Gerard Harkema</author>
+	<date>Wed Nov 10 2021</date>
+	<description>
+		Demonstration of pick and place usin AR-markers
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+
+</behavior>

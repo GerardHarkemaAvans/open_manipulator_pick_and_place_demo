@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="pick_and_place_moveit">
+
+	<executable package_path="pick_and_place_flexbe_behaviors.pick_and_place_moveit_sm" class="pick_and_place_moveitSM" />
+	<tagstring></tagstring>
+	<author>Gerard Harkema</author>
+	<date>Sat Mar 14 2020</date>
+	<description>
+		Binpicking state machine
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+
+</behavior>

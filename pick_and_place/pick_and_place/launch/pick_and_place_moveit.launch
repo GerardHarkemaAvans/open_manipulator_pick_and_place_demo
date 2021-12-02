@@ -1,0 +1,25 @@
+<launch>
+  <arg name="usb_port"     default="/dev/ttyUSB0"/>
+  <arg name="baud_rate"    default="1000000"/>
+  <arg name="video_device"    default="/dev/video4"/>
+
+  <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
+    <arg name="user_marker_size" value="3.0" />
+    <arg name="camera_model" value="adrucam" />
+    <arg name="open_rviz" value="false" />
+    <arg name="use_state_publisher" value="false" />
+    <arg name="video_device"  value="$(arg video_device)" />
+  </include>
+
+  <!-- start the environment -->
+  <include file="$(find open_manipulator_controllers)/launch/joint_trajectory_controller.launch">
+    <arg name="sim" value="false"/>
+    <arg name="open_rviz" value="false"/>
+    <arg name="usb_port"     default="$(arg usb_port)"/>
+  </include>
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="test_broadcaster" args="0.25 0.05 0.10 0 0 0 1 link1 testpoint" />
+
+  <node pkg="rviz" type="rviz" name="rviz" required="true"
+      args="-d $(find pick_and_place)/rviz/pick_and_place_moveit.rviz"/>
+</launch>

@@ -1,0 +1,25 @@
+<launch>
+
+  <arg name="video_device"    default="/dev/video4"/>
+
+  <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
+    <arg name="user_marker_size" value="3.0" />
+    <arg name="camera_model" value="adrucam" />
+    <arg name="open_rviz" value="false" />
+    <arg name="use_state_publisher" value="false" />
+    <arg name="video_device"  value="$(arg video_device)" />
+  </include>
+
+
+  <!-- The name of the parameter under which the URDF is loaded -->
+  <arg name="robot_description" default="robot_description"/>
+
+  <!-- The semantic description that corresponds to the URDF -->
+  <param name="$(arg robot_description)_semantic" textfile="$(find open_manipulator_moveit_config)/config/open_manipulator.srdf" />
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="test_broadcaster" args="0.2 0.05 0.10 0 0 0 1 link1 testpoint" />
+
+  <node pkg="rviz" type="rviz" name="rviz" required="true"
+      args="-d $(find pick_and_place)/rviz/pick_and_place.rviz"/>
+
+</launch>
